@@ -12,11 +12,13 @@ use Getopt::Long;
 use Ticker;
 
 # Command line flags.
+my $debug;
 my $help;
 my $output_format = "dumper";
 my $update;
 
 GetOptions(
+    'debug|d' => \$debug,
     'format|f=s' => \$output_format,
     'help|h' => \$help,
     'update|u' => \$update,
@@ -25,6 +27,10 @@ GetOptions(
 
 if ($help) {
     Ticker::display_help ();
+}
+elsif ($debug) {
+    Ticker::update_info ();
+    Ticker::display_info ($output_format);
 }
 elsif ($update) {
     Ticker::update_info ();
