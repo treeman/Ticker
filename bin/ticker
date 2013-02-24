@@ -1,0 +1,35 @@
+#!/usr/bin/env perl
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+use strict;
+use warnings;
+use 5.12.0;
+
+use Getopt::Long;
+
+use Ticker;
+
+# Command line flags.
+my $help;
+my $output_format = "dumper";
+my $update;
+
+GetOptions(
+    'format|f=s' => \$output_format,
+    'help|h' => \$help,
+    'update|u' => \$update,
+);
+
+
+if ($help) {
+    Ticker::display_help ();
+}
+elsif ($update) {
+    Ticker::update_info ();
+}
+else {
+    Ticker::display_info ($output_format);
+}
+

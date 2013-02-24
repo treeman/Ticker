@@ -1,0 +1,3 @@
+--lib  # Include the lib/ directory
+--recurse  # Include all tests 
+--shuffle  # Run tests in random order
