@@ -12,30 +12,38 @@ use Getopt::Long;
 use Ticker;
 
 # Command line flags.
+my $clear;
 my $debug;
 my $help;
-my $output_format = "dumper";
+my $output_format = "terminal";
+my $limit = 10;
+my $type;
 my $update;
 
 GetOptions(
+    'clear|c' => \$clear,
     'debug|d' => \$debug,
     'format|f=s' => \$output_format,
     'help|h' => \$help,
+    'limit|l=i' => \$limit,
+    'type|t=s' => \$type,
     'update|u' => \$update,
 );
 
+my $options = {
+    format => $output_format,
+    limit => $limit,
+    type => $type,
+};
+
+Ticker::clear_info () if $clear;
 
 if ($help) {
     Ticker::display_help ();
+    exit;
 }
-elsif ($debug) {
-    Ticker::update_info ();
-    Ticker::display_info ($output_format);
-}
-elsif ($update) {
-    Ticker::update_info ();
-}
-else {
-    Ticker::display_info ($output_format);
-}
+
+Ticker::update_info () if $update;
+
+Ticker::display_info ($options);
 

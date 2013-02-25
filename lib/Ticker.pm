@@ -56,7 +56,9 @@ sub update_info
 
 sub display_info
 {
-    my ($output_format) = @_;
+    my ($options) = @_;
+
+    my $output_format = $options->{format};
 
     my $data_file = data_file();
     unless (-e $data_file) {
@@ -84,7 +86,15 @@ sub display_info
     die "No valid format for '$output_format' found!" unless $printer;
 
     # Output information.
-    $printer->output ($info);
+    $printer->output ($info, $options);
+}
+
+sub clear_info
+{
+    my $data_file = data_file();
+    if (-e $data_file) {
+        unlink $data_file;
+    }
 }
 
 1;
