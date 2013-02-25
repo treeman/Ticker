@@ -12,18 +12,23 @@ use Getopt::Long;
 use Ticker;
 
 # Command line flags.
+my $clear;
 my $debug;
 my $help;
 my $output_format = "dumper";
 my $update;
 
 GetOptions(
+    'clear|c' => \$clear,
     'debug|d' => \$debug,
     'format|f=s' => \$output_format,
     'help|h' => \$help,
     'update|u' => \$update,
 );
 
+if ($clear) {
+    Ticker::clear_info ();
+}
 
 if ($help) {
     Ticker::display_help ();

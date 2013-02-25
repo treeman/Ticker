@@ -2,8 +2,15 @@ use strict;
 use warnings;
 use 5.12.0;
 
+package Ticker::Data;
+
+use Exporter 'import';
+our @EXPORT = qw(manga_list manga_config data_file data_dir cache_dir top_dir);
+
 use File::Slurp;
 use File::HomeDir;
+
+use Ticker::Misc;
 
 my $top_dir = File::HomeDir->my_home . "/.ticker";
 my $manga_list_file = "manga_list";
@@ -40,6 +47,9 @@ sub manga_list
     return () unless -e $file;
 
     my @list = read_file ($file);
-    return @list;
+
+    my %ids;
+    map { $ids{make_id ($_)} = 1; } @list;
+    return %ids;
 }
 

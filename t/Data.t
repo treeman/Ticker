@@ -7,8 +7,7 @@ use 5.12.0;
 use Test::More;
 use File::HomeDir;
 
-my $module_name = "Ticker::Data";
-require_ok ($module_name);
+use Ticker::Data;
 
 my $top_dir = top_dir();
 my $home_dir = File::HomeDir->my_home;

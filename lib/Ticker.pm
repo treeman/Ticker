@@ -87,5 +87,13 @@ sub display_info
     $printer->output ($info);
 }
 
+sub clear_info
+{
+    my $data_file = data_file();
+    if (-e $data_file) {
+        unlink $data_file;
+    }
+}
+
 1;
 

@@ -7,6 +7,7 @@ package Ticker::Parser::Mangastream;
 use LWP::Simple;
 use XML::Feed;
 
+use Ticker::Misc;
 use Ticker::Data;
 
 sub new
@@ -26,20 +27,35 @@ sub _parse
 {
     my ($self, $info, $site) = @_;
 
-    my $feed = XML::Feed->parse (\$site);
+    # Only track manga we're interested in.
+    my %interested = manga_list();
 
-    my @manga = ();
+    # Parse rss/atom feed and build manga info.
+    my $feed = XML::Feed->parse (\$site);
     for ($feed->entries) {
-        # TODO search, kill and destroy here.
-        my $e = {};
-        $e->{title} = $_->title;
-        $e->{link} = $_->link;
-        my $dt = $_->issued;
-        $e->{date} = $dt->datetime();
-        push (@manga, $e);
+        my $id = make_id ($_->title);
+
+        next unless $interested{$id};
+
+        my $manga = {};
+
+        ($manga->{name}, $manga->{chapter}) = $_->title =~ /^(.+)\s+(\d+)$/;
+
+        $manga->{link} = $_->link;
+        $manga->{date} = $_->issued;
+        $manga->{type} = "manga";
+
+        # Store if we have no previous record.
+        if (!$info->{$id}) {
+            $info->{$id} = $manga;
+        }
+        # Or if we found a new chapter.
+        elsif ($info->{$id}->{chapter} < $manga->{chapter}) {
+            $info->{$id} = $manga;
+        }
     }
 
-    $info->{manga} = \@manga;
+    return $info;
 }
 
 1;
