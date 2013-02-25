@@ -28,7 +28,7 @@ sub _parse
     my ($self, $info, $site) = @_;
 
     # Only track manga we're interested in.
-    my %interested = manga_list();
+    my %interested = manga_id_list();
 
     # Parse rss/atom feed and build manga info.
     my $feed = XML::Feed->parse (\$site);

@@ -5,7 +5,7 @@ use 5.12.0;
 package Ticker::Data;
 
 use Exporter 'import';
-our @EXPORT = qw(manga_list manga_config data_file data_dir cache_dir top_dir);
+our @EXPORT = qw(manga_list manga_config data_file data_dir cache_dir top_dir manga_id_list);
 
 use File::Slurp;
 use File::HomeDir;
@@ -46,7 +46,13 @@ sub manga_list
 
     return () unless -e $file;
 
-    my @list = read_file ($file);
+    my @list = read_file ($file, chomp => 1);
+    return @list;
+}
+
+sub manga_id_list
+{
+    my @list = manga_list();
 
     my %ids;
     map { $ids{make_id ($_)} = 1; } @list;
