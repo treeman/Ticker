@@ -14,6 +14,7 @@ use Ticker::Misc;
 
 my $top_dir = File::HomeDir->my_home . "/.ticker";
 my $manga_list_file = "manga_list";
+my $tv_list_file = "tv_list";
 
 sub top_dir
 {
@@ -40,6 +41,11 @@ sub manga_config
     return top_dir() . "/$manga_list_file";
 }
 
+sub tv_config
+{
+    return top_dir() . "/$tv_list_file";
+}
+
 sub manga_list
 {
     my $file = manga_config();
@@ -53,6 +59,25 @@ sub manga_list
 sub manga_id_list
 {
     my @list = manga_list();
+
+    my %ids;
+    map { $ids{make_id ($_)} = 1; } @list;
+    return %ids;
+}
+
+sub tv_list
+{
+    my $file = tv_config();
+
+    return () unless -e $file;
+
+    my @list = read_file ($file, chomp => 1);
+    return @list;
+}
+
+sub tv_id_list
+{
+    my @list = tv_list();
 
     my %ids;
     map { $ids{make_id ($_)} = 1; } @list;

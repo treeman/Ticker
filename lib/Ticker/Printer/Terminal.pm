@@ -19,9 +19,6 @@ sub output
         if ($_->{type} eq "manga") {
             say $_->{name} . " " . $_->{chapter};
         }
-        else {
-            say "??";
-        }
     }
 }
 
