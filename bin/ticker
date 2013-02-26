@@ -6,8 +6,6 @@ use 5.12.0;
 
 use File::Basename;
 
-# */2 * * * * /home/tree/bin/ticker --update --silent >> /home/tree/ticker.log 2>&1
-
 # Resolve script name through symlink and include lib dir.
 # Slightly hacky.
 my $lib_dir;
