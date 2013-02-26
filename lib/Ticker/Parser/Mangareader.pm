@@ -47,12 +47,19 @@ sub _parse_latest
 
             my $date = $e->parent->parent->find(".c1")->first->text;
             my $dt;
-            if ($date =~ /^(\d+)\s+(.+)\s+(\d+)$/) {
+            if ($date eq "Today") {
+                $dt = DateTime->today();
+            }
+            elsif ($date eq "Yesterday") {
+                $dt = DateTime->today->subtract( days => 1 );
+            }
+            elsif ($date =~ /^(\d+)\s+(.+)\s+(\d+)$/) {
                 my $strp = DateTime::Format::Strptime->new (pattern => "%d %b %Y");
                 $dt = $strp->parse_datetime ($date);
             }
             else {
-                $dt = DateTime->now();
+                $dt = DateTime->today();
+                #die "Couldn't find for ".$e->text;
             }
 
             my $manga = {};
