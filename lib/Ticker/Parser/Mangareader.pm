@@ -59,7 +59,6 @@ sub _parse_latest
             }
             else {
                 $dt = DateTime->today();
-                #die "Couldn't find for ".$e->text;
             }
 
             my $manga = {};

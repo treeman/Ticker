@@ -1,11 +1,19 @@
 #!/usr/bin/env perl
 
-use FindBin;
-use lib "$FindBin::Bin/../lib";
-
 use strict;
 use warnings;
 use 5.12.0;
+
+use File::Basename;
+
+# Resolve script name through symlink and include lib dir.
+# Slightly hacky.
+my $lib_dir;
+BEGIN {
+    my $proj_dir = dirname (readlink ($0));
+    $lib_dir = "$proj_dir/../lib";
+}
+use lib $lib_dir;
 
 use Getopt::Long;
 
@@ -15,8 +23,9 @@ use Ticker;
 my $clear;
 my $debug;
 my $help;
-my $output_format = "terminal";
 my $limit = 10;
+my $output_format = "terminal";
+my $silent;
 my $type;
 my $update;
 
@@ -26,6 +35,7 @@ GetOptions(
     'format|f=s' => \$output_format,
     'help|h' => \$help,
     'limit|l=i' => \$limit,
+    'silent|s' => \$silent,
     'type|t=s' => \$type,
     'update|u' => \$update,
 );
@@ -45,5 +55,5 @@ if ($help) {
 
 Ticker::update_info () if $update;
 
-Ticker::display_info ($options);
+Ticker::display_info ($options) unless $silent;
 
