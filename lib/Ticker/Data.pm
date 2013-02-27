@@ -5,7 +5,7 @@ use 5.12.0;
 package Ticker::Data;
 
 use Exporter 'import';
-our @EXPORT = qw(manga_list manga_config data_file data_dir cache_dir top_dir manga_id_list);
+our @EXPORT = qw(manga_list manga_config data_file data_dir cache_dir top_dir manga_id_list tv_list tv_id_list);
 
 use File::Slurp;
 use File::HomeDir;

@@ -18,8 +18,8 @@ BEGIN {
     }
 }
 use lib $lib_dir;
-
 use Getopt::Long;
+Getopt::Long::Configure ("bundling");
 
 use Ticker;
 

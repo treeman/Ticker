@@ -59,6 +59,7 @@ sub _parse
         episode => $ep + 0,
     };
     $tv{type} = 'tv';
+    $tv{date} = $tv{latest}->{date};
 
     my $id = make_id ($tv{name});
     $info->{$id} = \%tv;
