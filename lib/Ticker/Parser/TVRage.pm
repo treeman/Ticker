@@ -62,6 +62,7 @@ sub _parse
     $tv{date} = $tv{latest}->{date};
 
     my $id = make_id ($tv{name});
+    next unless $id;
     $info->{$id} = \%tv;
 
     return $info;

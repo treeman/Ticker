@@ -73,6 +73,8 @@ sub _parse_latest
 
             my $store_id = make_id ($name);
 
+            next unless $store_id;
+
             # Store if we have no previous record.
             if (!$info->{$store_id}) {
                 $info->{$store_id} = $manga;

@@ -35,6 +35,7 @@ sub _parse
     for ($feed->entries) {
         my $id = make_id ($_->title);
 
+        next unless $id;
         next unless $interested{$id};
 
         my $manga = {};
